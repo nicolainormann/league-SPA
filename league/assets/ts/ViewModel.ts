@@ -1,14 +1,20 @@
 /// <reference path="../../scripts/typings/jquery/jquery.d.ts" />
 /// <reference path="../../scripts/typings/knockout/knockout.d.ts" />
-///api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}
+
 module League.ViewModels {
     export class PostViewModel {
-        public post: KnockoutObservable<DtoPost>;
+        public summoner: KnockoutObservable<Summoner>;
+		public matchList: KnockoutObservable<MatchList>;
+		public stats: KnockoutObservable<Stats>;
+		public matchArray: KnockoutObservable<MatchArray>;
         public postName = ko.observable<string>("");
 		private apiKey = <string>"api_key=0a8d68f4-5e00-4345-9f35-c098a7ebe45b";
 		
         public constructor() {
-            this.post = ko.observable<DtoPost>(new DtoPost());
+            this.summoner = ko.observable<Summoner>(new Summoner());
+			this.matchList = ko.observable<MatchList>(new MatchList());
+			this.stats = ko.observable<Stats>(new Stats());
+			this.matchArray = ko.observable<MatchArray>(new MatchArray());
             this.postName.subscribe(this.getSummoner);
         }
 
@@ -17,17 +23,19 @@ module League.ViewModels {
 				url: 'https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/' + this.postName() + "?" + this.apiKey,
 				method: 'GET'
 			}).then(data => {
-				this.post(<DtoPost>data[Object.keys(data)[0]]);
+				console.log(data);
+				this.summoner(<Summoner>data[Object.keys(data)[0]]);
 				this.getData();
 			});
 		}
 
         public getData = () => {
-			var id = this.post().id;
+			var id = this.summoner().id;
+			
 
 			var services = [
 				'v2.2/matchlist/by-summoner/' + id + "?" + this.apiKey,
-				'v1.3/stats/by-summoner/' + id + '/ranked?season=SEASON2015&' + this.apiKey
+				//'v1.3/stats/by-summoner/' + id + '/ranked?season=SEASON2015&' + this.apiKey
 			];
 
 			for (var i = 0; i < services.length; i++) {
@@ -36,16 +44,43 @@ module League.ViewModels {
 					method: 'GET'
 				}).then(data => {
 					console.log(data);
-					this.post(<DtoPost>data);
+					this.matchList(<MatchList>data);
+					this.stats(<Stats>data);
+					this.getMatches();
 				});
 			}
         }
+
+		public getMatches = () => {
+			var matches = this.matchList().matches;
+
+			for (var i = 0; i < 2; i++) {
+				$.ajax({
+					url: 'https://euw.api.pvp.net/api/lol/euw/v2.2/match/' + matches[i].matchId + "?" + this.apiKey,
+					method: 'GET'
+				}).then(data => {
+					console.log(data);
+				});
+			}
+		}
     }
 
-    export class DtoPost {
-		public id = ko.observable<number>(0);
-        public name = ko.observable<string>("");
-        public summonerLevel = ko.observable<number>(0);
-		public matches = ko.observableArray[10];
+    export class Summoner {
+		public id = ko.observable<number>();
+        public name = ko.observable<string>();
+		public profileIconId = ko.observable<number>(0);
+        public summonerLevel = ko.observable<number>();
     }
+
+	export class MatchList {
+		public matches = ko.observableArray[0];
+	}
+
+	export class MatchArray {
+		public array = ko.observableArray[0];
+	}
+
+	export class Stats {
+		public champions = ko.observableArray[0];
+	}
 }
