@@ -73,11 +73,11 @@ var imgTypes = [
 gulp.task('default', ['browsersync', 'watchSync', 'watchCss', 'watchTs']);
 
 gulp.task('library', ['libraryCss', 'libraryJs']);
-
+//C:/Users/nicolai-desktop/GIT/league-SPA/league
 gulp.task('browsersync', function(){
     browsersync.init({
         server: {
-            baseDir: "C:/Users/nicolai-desktop/GIT/league-SPA/league"
+            baseDir: "C:/Users/Nicolai/GIT/Github/league-SPA/league"
         }
     });
 });

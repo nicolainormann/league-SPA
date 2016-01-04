@@ -1,5 +1,5 @@
-/// <reference path="../../scripts/typings/jquery/jquery.d.ts" />
-/// <reference path="../../scripts/typings/knockout/knockout.d.ts" />
+/// <reference path="../../Scripts/typings/jquery/jquery.d.ts" />
+/// <reference path="../../Scripts/typings/knockout/knockout.d.ts" />
 
 module League.ViewModels {
     export class PostViewModel {
@@ -24,7 +24,8 @@ module League.ViewModels {
 				method: 'GET'
 			}).then(data => {
 				console.log(data);
-				this.summoner(<Summoner>data[Object.keys(data)[0]]);
+                this.summoner(<Summoner>data[Object.keys(data)[0]]);
+                this.summoner().matchIdList.push(1);
 				this.getData();
 			});
 		}
@@ -43,10 +44,14 @@ module League.ViewModels {
 					url: 'https://euw.api.pvp.net/api/lol/euw/' + services[i],
 					method: 'GET'
 				}).then(data => {
-					console.log(data);
-					this.matchList(<MatchList>data);
-					this.stats(<Stats>data);
-					this.getMatches();
+                    console.log(data);
+                    for (var num in data.matches) {
+                        var id = data.matches[num].matchId;
+                        console.log(id);
+                        this.summoner().matchIdList.push(id);
+                    }
+					//this.stats(<Stats>data);
+					//this.getMatches();
 				});
 			}
         }
@@ -59,7 +64,8 @@ module League.ViewModels {
 					url: 'https://euw.api.pvp.net/api/lol/euw/v2.2/match/' + matches[i].matchId + "?" + this.apiKey,
 					method: 'GET'
 				}).then(data => {
-					console.log(data);
+                    console.log(data);
+                    
 				});
 			}
 		}
@@ -70,6 +76,7 @@ module League.ViewModels {
         public name = ko.observable<string>();
 		public profileIconId = ko.observable<number>(0);
         public summonerLevel = ko.observable<number>();
+        public matchIdList = ko.observableArray<number>([]);
     }
 
 	export class MatchList {
