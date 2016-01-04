@@ -53,10 +53,12 @@ var watchTs = [
 ];
 
 var library = {
-    css: [
+	css: [
+		'packages/materialize.0.96.1/content/content/materialize/css/materialize.css'
     ],
     js: [
-        'packages/knockoutjs.3.4.0/Content/Scripts/knockout-3.4.0.js'
+        'packages/knockoutjs.3.4.0/Content/Scripts/knockout-3.4.0.js',
+		'packages/materialize.0.96.1/content/scripts/materialize/materialize.js'
     ]
 };
 
