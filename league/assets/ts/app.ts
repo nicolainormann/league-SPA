@@ -7,5 +7,5 @@ window.onload = () => {
 
     ko.applyBindings(postViewModel);
 
-    postViewModel.getData();
+    postViewModel.getSummoner();
 };

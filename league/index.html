@@ -15,35 +15,83 @@
 		<div class="row">
 			<div class="col l3 m3 s3 leftSection">
 				<div class="row">
-					<input type="text" name="postName" data-bind="value: postName" />
+					<input type="text" name="postName" data-bind="value: postName" placeholder="Write summoner name here"/>
 				</div>
 
 				<div class="row">
 					<div class="col l5 m5 s5">
-						<div class="profile" data-bind="attr: {'data-img-id': summoner().profileIconId}">
-							<div class="summonerLevel" data-bind="text: summoner().summonerLevel"></div>
+						<div class="profile" data-bind="attr: {'data-img-id': summoner().summonerData.profileIconId}">
+							<div class="summonerLevel" data-bind="text: summoner().summonerData.summonerLevel"></div>
 						</div>
 					</div>
 
 					<div class="col l7 m7 s7">
-						<div data-bind="text: summoner().name"></div>
+						<div data-bind="text: summoner().summonerData.name"></div>
 					</div>
 				</div>
 			</div>
 
-			<div class="col l6 m6 s6 centerSection" data-bind="foreach: matchList().matches">
-				<div class="champion" data-bind="attr: {'data-img-id': champion}"></div>
+			<div class="col l6 m6 s6 centerSection">
+				
 			</div>
 
-			<div class="col l3 m3 s3 rightSection" data-bind="foreach: matchArray().array">
-				<div data-bind="text: region"></div>
+			<div class="col l3 m3 s3 rightSection">
+				
 			</div>
 		</div>
-
-		<!--<div data-bind="foreach: stats().champions"></div>-->
 
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="assets/min/library.min.js"></script>
         <script src="assets/min/main.min.js"></script>
     </body>
 </html>
+
+<!--<!doctype html>
+<html lang="en">
+
+<head>
+	<title></title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<link rel="stylesheet" href="assets/min/library.min.css">
+	<link rel="stylesheet" href="assets/min/main.min.css">
+</head>
+
+<body>
+	<div class="row">
+		<div class="col l3 m3 s3 leftSection">
+			<div class="row">
+				<input type="text" name="postName" data-bind="value: postName" />
+			</div>
+
+			<div class="row">
+				<div class="col l5 m5 s5">
+					<div class="profile" data-bind="attr: {'data-img-id': summoner().profileIconId}">
+						<div class="summonerLevel" data-bind="text: summoner().summonerLevel"></div>
+					</div>
+				</div>
+
+				<div class="col l7 m7 s7">
+					<div data-bind="text: summoner().name"></div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col l6 m6 s6 centerSection" data-bind="foreach: matchList().matches">
+			<div class="champion" data-bind="attr: {'data-img-id': champion}"></div>
+		</div>
+
+		<div class="col l3 m3 s3 rightSection" data-bind="foreach: matchArray().array">
+			<div data-bind="text: region"></div>
+		</div>
+	</div>
+
+	<div data-bind="foreach: stats().champions"></div>
+
+	<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="assets/min/library.min.js"></script>
+	<script src="assets/min/main.min.js"></script>
+</body>
+</html>-->
